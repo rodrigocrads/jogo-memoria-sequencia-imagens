@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Board Game</title>
+        <style>
+            .board-game {
+                margin: auto;
+                width: auto;
+                height: auto;
+                display: table;
+            }
+
+            .box-image img {
+                width: 350px;
+                height: 350px;
+            }
+
+            .box-choice-sequency-images div, .box-sequency-images div{
+                display: inline-block;
+            }
+
+            .box-choice-sequency-images img {
+                width: 150px;
+                height: 150px;
+                box-sizing: border-box;
+                cursor: pointer;
+            }
+
+            .box-sequency-images img {
+                width: 150px;
+                height: 150px;
+                box-sizing: border-box;
+            }
+
+            .selected {
+                border: 10px solid #CCC;
+            }
+
+            .box-posicao-escolhida {
+                position: relative;
+                top: -18px;
+                left: 26px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="board-game">
+            <div class="box-image">
+                <img id="image" />
+            </div>
+            <div id="box-choice-sequency-images" class="box-choice-sequency-images"></div>
+            <div id="box-sequency-images" class="box-sequency-images"></div>
+        </div>
+        <script type="module" src="scripts/game.js"></script>
+    </body>
+</html>
