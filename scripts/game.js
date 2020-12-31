@@ -1,6 +1,6 @@
 import Imagem from "./Imagem.js";
 
-var sequencySize = 6;
+var sequencySize = 7;
 let sequenciaImagensMemorizacao = construirSequenciaImagens();
 var listaOpcoesImagens = [];
 var ultimaPosicaoEscolhida = 0;
@@ -78,11 +78,12 @@ function exibirOpcoesImagensApresentados() {
         let spanHtmlElemento = document.createElement('span');
 
         imgHtmlElemento.src = listaAleatoriaImagens[i].caminhoAbsoluto;
-        let idImgHtmlElemento = `opcao-image-${i}`;
+        let idImagem = listaAleatoriaImagens[i].id;
+        let idImgHtmlElemento = `opcao-image-${idImagem}`;
         imgHtmlElemento.id = idImgHtmlElemento;
         imgHtmlElemento.addEventListener('click', function () { selecionarOuRemoverOpcao(this);});
 
-        spanHtmlElemento.setAttribute('id', `posicao-escolhida-opcao-image-${i}`);
+        spanHtmlElemento.setAttribute('id', `posicao-escolhida-opcao-image-${idImagem}`);
         spanHtmlElemento.setAttribute('class', `box-posicao-escolhida`);
 
         divHtmlElemento.append(spanHtmlElemento);
@@ -91,7 +92,7 @@ function exibirOpcoesImagensApresentados() {
         boxImagesElement.append(divHtmlElemento);
 
         listaOpcoesImagens.push({
-            idImagem: i,
+            idImagem: idImagem,
             idImgHtmlElemento: idImgHtmlElemento,
             selecionado : false,
             posicaoEscolhida: null,
@@ -114,7 +115,7 @@ function selecionarOuRemoverOpcao(el) {
     } else {
         for (let opcao in listaOpcoesImagens) {
             if (listaOpcoesImagens[opcao].idImgHtmlElemento === el.id) {
-                listaOpcoesImagens[opcao].selecionado = false;
+                listaOpcoesImagens[opcao].selecionado = true;
                 listaOpcoesImagens[opcao].posicaoEscolhida = ++ultimaPosicaoEscolhida;
             }
         }
@@ -142,6 +143,11 @@ function exibirImagensApresentados() {
         imgHtmlElemento.src = sequenciaImagensMemorizacao[i].caminhoAbsoluto;
         imgHtmlElemento.setAttribute("class", "selected");
 
+        // verificando se a posição da sequência das imagens foi igual ao que o usuário selecionou nas opções
+        let opcaoImagem = obterOpcaoImagemSelecionadoPorId(sequenciaImagensMemorizacao[i].id);
+        if (opcaoImagem && opcaoImagem.posicaoEscolhida !== i+1)
+            imgHtmlElemento.setAttribute("class", "errou");
+
         spanHtmlElemento.setAttribute('id', `posicao-escolhida-opcao-image-${i+1}`);
         spanHtmlElemento.setAttribute('class', `box-posicao-escolhida`);
         spanHtmlElemento.textContent = i+1;
@@ -150,7 +156,19 @@ function exibirImagensApresentados() {
         divHtmlElemento.append(imgHtmlElemento);
 
         boxImagesElement.append(divHtmlElemento);
+
     }
+}
+
+function obterOpcaoImagemSelecionadoPorId(id)
+{
+    for (var i=0; i < listaOpcoesImagens.length; i++) {
+        if (listaOpcoesImagens[i].idImagem === id) {
+            return listaOpcoesImagens[i];
+        }
+    }
+
+    return undefined;
 }
 
 function exibirResultadoJogo() {
