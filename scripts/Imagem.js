@@ -1,11 +1,11 @@
 class Imagem {
     id;
-    caminhoAbsoluto;
+    caminhoArquivo;
     foiExibido = false;
 
-    constructor(id, caminhoAbsoluto) {
+    constructor(id, caminhoArquivo) {
         this.id = id;
-        this.caminhoAbsoluto = caminhoAbsoluto;
+        this.caminhoArquivo = caminhoArquivo;
     }
 }
 

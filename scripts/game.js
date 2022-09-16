@@ -1,14 +1,18 @@
 import Imagem from "./Imagem.js";
 
-var sequencySize = 7;
-let sequenciaImagensMemorizacao = construirSequenciaImagens();
-var listaOpcoesImagens = [];
-var ultimaPosicaoEscolhida = 0;
-var jogoFinalizado = false;
+// Configuração do game
+const quantidadeImagens = 7;
+const tempoExibicaoImagem = 1000;
+
+// Execução do game
+const sequenciaImagensMemorizacao = construirSequenciaImagens();
+const listaOpcoesImagens = [];
+const ultimaPosicaoEscolhida = 0;
+let jogoFinalizado = false;
 
 var temporizadorSequencia = setInterval(
         exibirSequenciaImagens,
-        '2000',
+        tempoExibicaoImagem,
         sequenciaImagensMemorizacao
     );
 
@@ -28,7 +32,7 @@ function construirSequenciaImagens() {
 function gerarSequenciaIndicesImagens() {
     let listaSequenciaIndicesImagens = [];
 
-    for (var i = 0; i < sequencySize; i++) {
+    for (var i = 0; i < quantidadeImagens; i++) {
         let deveGerarNumeroRandomico = true;
         do {
             let numeroRandomico = gerarNumeroRandomico();
@@ -43,14 +47,14 @@ function gerarSequenciaIndicesImagens() {
 }
 
 function gerarNumeroRandomico() {
-    let numeroRandomico = Math.floor(Math.random() * sequencySize + 1);
+    let numeroRandomico = Math.floor(Math.random() * quantidadeImagens + 1);
     return numeroRandomico;
 }
 
 function exibirSequenciaImagens(listaImagens) {
     let imageHtmlElement = document.getElementById('image');
 
-    let imagensNaoExibidas = listaImagens.filter(imagem => imagem.foiExibido === false);
+    let imagensNaoExibidas = listaImagens.filter(imagem => !imagem.foiExibido);
 
     if (imagensNaoExibidas.length === 0) {
         imageHtmlElement.style.display = 'none';
@@ -60,8 +64,8 @@ function exibirSequenciaImagens(listaImagens) {
     }
 
     for (let imagem in listaImagens) {
-        if (listaImagens[imagem].foiExibido === false) {
-            imageHtmlElement.src = listaImagens[imagem].caminhoAbsoluto;
+        if (!listaImagens[imagem].foiExibido) {
+            imageHtmlElement.src = listaImagens[imagem].caminhoArquivo;
             listaImagens[imagem].foiExibido = true;
             return;
         }
@@ -72,12 +76,12 @@ function exibirOpcoesImagensApresentados() {
     let boxImagesElement = document.getElementById('box-choice-sequency-images');
     let listaAleatoriaImagens = construirSequenciaImagens();
 
-    for (var i=0; i<sequencySize;i++) {
+    for (var i=0; i<quantidadeImagens;i++) {
         let divHtmlElemento = document.createElement('div');
         let imgHtmlElemento = document.createElement('img');
         let spanHtmlElemento = document.createElement('span');
 
-        imgHtmlElemento.src = listaAleatoriaImagens[i].caminhoAbsoluto;
+        imgHtmlElemento.src = listaAleatoriaImagens[i].caminhoArquivo;
         let idImagem = listaAleatoriaImagens[i].id;
         let idImgHtmlElemento = `opcao-image-${idImagem}`;
         imgHtmlElemento.id = idImgHtmlElemento;
@@ -125,7 +129,7 @@ function selecionarOuRemoverOpcao(el) {
         el.setAttribute("class", "selected");
     }
 
-    if (ultimaPosicaoEscolhida === sequencySize && jogoFinalizado === false) {
+    if (ultimaPosicaoEscolhida === quantidadeImagens && jogoFinalizado === false) {
         exibirImagensApresentados();
         exibirResultadoJogo();
         jogoFinalizado = true;
@@ -135,12 +139,12 @@ function selecionarOuRemoverOpcao(el) {
 function exibirImagensApresentados() {
     let boxImagesElement = document.getElementById('box-sequency-images');
 
-    for (var i = 0; i < sequencySize; i++) {
+    for (var i = 0; i < quantidadeImagens; i++) {
         let divHtmlElemento = document.createElement('div');
         let imgHtmlElemento = document.createElement('img');
         let spanHtmlElemento = document.createElement('span');
 
-        imgHtmlElemento.src = sequenciaImagensMemorizacao[i].caminhoAbsoluto;
+        imgHtmlElemento.src = sequenciaImagensMemorizacao[i].caminhoArquivo;
         imgHtmlElemento.setAttribute("class", "selected");
 
         // verificando se a posição da sequência das imagens foi igual ao que o usuário selecionou nas opções
