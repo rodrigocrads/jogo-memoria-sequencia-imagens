@@ -1,13 +1,13 @@
 import Imagem from "./Imagem.js";
 
-// Configuração do game
+// Configuração do jogo
 const quantidadeImagens = 7;
 const tempoExibicaoImagem = 1000;
 
 // Execução do game
 const sequenciaImagensMemorizacao = construirSequenciaImagens();
 const listaOpcoesImagens = [];
-const ultimaPosicaoEscolhida = 0;
+let ultimaPosicaoEscolhida = 0;
 let jogoFinalizado = false;
 
 var temporizadorSequencia = setInterval(
